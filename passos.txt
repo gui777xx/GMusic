@@ -1,0 +1,18 @@
+Abra o terminal, com [Ctrl * ']
+
+Criar o projeto:
+    npx create-expo-app@latest GMusic --template blank
+    cd GMusic
+
+Instalar os pacotes necessários:
+    npx expo install react-dom react-native-web @expo/metro-runtime
+    npx expo install @react-native-community/slider
+    npx expo install expo-av
+
+EXecutar o projeto:
+
+    Android:
+    npx expo start --android --localhost
+
+    web:
+    npx expo start --web
