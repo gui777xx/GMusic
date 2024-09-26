@@ -71,7 +71,7 @@ const MusicPlayer = () => {
 
   const skipToPrevious = () => {
     songSlider.current.scrollToOffset({
-      offset: (songIndex - 1) *width
+      offset: (songIndex - 1) * width
     });
   };
 
@@ -120,7 +120,6 @@ const MusicPlayer = () => {
     return () => clearInterval(intervalid);
   }, [sound, isPlaying]);
 
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
@@ -158,24 +157,32 @@ const MusicPlayer = () => {
         <View>
           <Slider
             style={styles.progressBar}
-            value={10}
+            value={songStatus ? songStatus.positionMillis : 0}
             minimumValue={0}
-            maximumValue={100}
+            maximumValue={songStatus ? songStatus.durationMillis : 0}
             thumbTintColor='#FFD369'
             minimumTrackTintColor='#FFD369'
             maximumTrackTintColor='#FFF'
             onSlidingComplete={(value) => {
-              sound.setPositonAsync(value)
+              sound.setPositionAsync(value)
              }}
           />
           <View style={styles.progressLevelDuration}>
             <Text style={styles.progressLabeltext}>
-              {songStatus ?
-              (`&{Math}`)}
+            {songStatus ?
+              (`${Math.floor(songStatus.positionMillis / 1000 / 60)}:${String(Math.floor(((songStatus.positionMillis / 1000) % 60))).padStart(2, "0")}`
+              ) : "00:00"
+            }
             </Text>
-            <Text style={styles.progressLabeltext}>00.00</Text>
+            <Text style={styles.progressLabeltext}>
+            {songStatus ?
+              (`${Math.floor(songStatus.durationMillis / 1000 / 60)}:${String(Math.floor((songStatus.durationMillis / 1000) % 60)).padStart(2, "0")}`
+              ) : "00:00"
+            }
+            </Text>
           </View>
         </View>
+
         <View style={styles.musicControlsContainer}>
           <TouchableOpacity onPress={skipToPrevious}>
             <Ionicons name='play-skip-back-outline' size={35} color="#FFD369" />
@@ -217,7 +224,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#222831',
   },
-
   main: {
     flex: 1,
     alignItems: 'center',
